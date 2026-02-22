@@ -1,0 +1,37 @@
+# Block1 (Persona LoRA) config - Qwen3-VL
+project:
+  name: AIPersona
+  run_name: persona_qwen3vl_v1
+
+paths:
+  dataset_jsonl: "data/datasets/persona_v1_mini.jsonl"
+  output_adapter_dir: "models/lora_adapters/persona_qwen3vl_v1"
+  logs_dir: "outputs/logs"
+  eval_dir: "outputs/eval_samples"
+
+model:
+  base_model_id: "Qwen/Qwen3-VL-8B-Instruct"
+  train_model_id: "unsloth/Qwen3-VL-8B-Thinking-unsloth-bnb-4bit"
+  load_in_4bit: true
+  max_seq_length: 2048
+
+lora: # LoRA adapter 설정
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+  r: 16
+  alpha: 16
+  dropout: 0.0
+  bias: "none"
+
+train:
+  epochs: 1
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 2.0e-4
+  warmup_steps: 20
+  logging_steps: 10
+  save_steps: 200
+  seed: 3407
+
+# Block1 목표가 "기질/톤"이므로 텍스트-only 미니셋부터 시작
+data:
+  format: "messages_jsonl"  # {"messages":[{"role":"user","content":"..."},...]}
