@@ -1,0 +1,80 @@
+# =========================
+# AIPersona .gitignore
+# =========================
+
+# --- Python cache / build ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- Virtual environments ---
+.venv_persona/
+venv/
+ENV/
+AIPersona1/          
+pip-wheel-metadata/
+
+# --- Jupyter / notebooks ---
+*.ipynb_checkpoints/
+
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# --- Logs / outputs (generated) ---
+outputs/
+*.log
+
+# --- Model files / caches (very large) ---
+models/hf_cache/     # HF_HOME / TRANSFORMERS_CACHE 고정 경로
+models/merged/       # merge 모델 저장소(대용량)
+**/*.bin
+**/*.pt
+**/*.pth
+**/*.ckpt
+**/*.onnx
+**/*.gguf
+
+# --- LoRA adapters (choose one) ---
+# 기본은 무시(학습 산출물은 보통 재생성 가능 + 용량 커질 수 있음)
+#models/lora_adapters/
+
+# 만약 LoRA 결과물은 올리고 싶다면 위 줄을 주석처리하고 아래처럼 예외 규칙 사용:
+# !models/lora_adapters/
+# !models/lora_adapters/**/adapter_model.safetensors
+# !models/lora_adapters/**/adapter_config.json
+# !models/lora_adapters/**/tokenizer_config.json
+# !models/lora_adapters/**/special_tokens_map.json
+
+# --- Datasets / raw data ---
+# 원본 프롬프트/대화 데이터는 개인정보/저작권 이슈 있을 수 있으니 기본 무시 권장
+#data/datasets/
+#data/raw_prompts.txt
+
+# 만약 데이터셋을 버전관리하고 싶다면 위 두 줄 주석처리하고,
+# 예: data/datasets/persona_v1_mini.jsonl 같은 "공개 가능한 샘플만" 커밋 추천
+
+# --- Secrets / environment files ---
+.env
+.env.*
+*.key
+*.pem
+
+# --- HuggingFace / Torch / runtime caches ---
+.cache/
+torch_cache/
+wandb/
+mlruns/
+
+# --- Temporary files ---
+*.tmp
+*.temp
+*.swp
+*.bak
